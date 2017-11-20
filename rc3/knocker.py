@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import socket
-import re
 from math import floor, trunc, ceil
 
 def text2int(textnum, numwords={}):
@@ -38,59 +37,43 @@ sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 port1 = 7747
 sock1.connect(("18.216.59.235", port1))
 
-sockList = []
-sockList.append(sock1)
+socketList = []
+socketList.append(sock1)
 
 for newPort in range(1,50):
     newSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sockList.append(newSocket)
+    socketList.append(newSocket)
 
 for i in range(1,3):
     print(sock1.recv(1024))
 
 sock1.send(b'\r')
 
-regEx = "b'.n(.*).n'"
-
 answer = ''
 
 for sockNumber in range(50):
-
-
-    message = str(sockList[sockNumber].recv(1024))
-    #print(message)
-    #print(sockList[sockNumber].recv(1024))
+    
+    message = str(socketList[sockNumber].recv(1024))
     answer += message[2]
 
     if len(message) > 6:
         x1 = message[5:]
-        dump = sockList[sockNumber].recv(1024)
+        dump = socketList[sockNumber].recv(1024)
     else:
-        x1 = str(sockList[sockNumber].recv(1024))
-    #print('x1 is currently: ',  x1)
-    '''m1 = re.search(regEx, x1)
-    i1 = m1.group(1)
-    '''
-    #print(x1)
-    x1 = str(x1.replace("b'",'',1))
-    '''if sockNumber == 4:
-        x1 = x1[4:-3]
-    else:'''
-    x1 = str(x1[:-3])
-    #print(x1)
-    i1 = str(x1)
-    try:
-        if 'and' in i1:
-            i1 = i1.replace(',','')
-            i1 = i1.replace('-',' ')
-            i1 = str(text2int(i1))
-            #print('converted')
-    except:
-        print('fail')
+        x1 = str(socketList[sockNumber].recv(1024))
 
+    x1 = str(x1.replace("b'",'',1))
+    x1 = str(x1[:-3])
+    
+    try:
+        if 'and' in x1:
+            x1 = x1.replace(',','')
+            x1 = x1.replace('-',' ')
+            x1 = str(text2int(x1))
+    except:
+        pass
 
     port2 = eval(str(i1))
-    #print(port2)
-    sockList[sockNumber].close()
+    socketList[sockNumber].close()
     print(answer)
-    sockList[sockNumber+1].connect(('18.216.59.235', port2))
+    socketList[sockNumber+1].connect(('18.216.59.235', port2))
