@@ -11,6 +11,14 @@ Not knowing how many characters were in the flag we ran the loop 50 times; creat
 Using socket.recv() returned the letter required for the flag as "b'<character>\n'" with <character> being a single character from the flag. We stored the flag character in a string variable and printed it out at the end.
 This was where the first issue arose; the server was meant to return the flag character in one message and then send the next port number in the next message, however sometimes the server would send the flag character and the next port number in the same message and leave the next message blank. To overcome this I programmed in a check to see if the first message was more than 6 characters long, and then if it was, to use the second part of it as the str to evaluate.
 
+```python
+if len(message) > 6:
+        response = message[5:]
+        dump = socketList[socketNumber].recv(1024)
+    else:
+        response = str(socketList[socketNumber].recv(1024))
+```
+
 We used a lot of replace() functions to strip the server messages of certain characters, whereas we should have used regex... but we were just aiming to get the flag, you can make it more efficient/prettier later! :)
 
 For an unknown reason the flag returned didn't have '}' at the end and it would just refuse the last connection, luckily we managed to get the important part of it though!
