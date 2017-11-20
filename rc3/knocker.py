@@ -33,47 +33,46 @@ def text2int(textnum, numwords={}):
 
     return result + current
 
-sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-port1 = 7747
-sock1.connect(("18.216.59.235", port1))
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+port = 7747
+sock.connect(("18.216.59.235", port))
 
 socketList = []
-socketList.append(sock1)
+socketList.append(sock)
 
-for newPort in range(1,50):
-    newSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socketList.append(newSocket)
-
-for i in range(1,3):
-    print(sock1.recv(1024))
+for i in range(2):
+    print(sock.recv(1024))
 
 sock1.send(b'\r')
 
 answer = ''
 
-for sockNumber in range(50):
+for socketNumber in range(50):
     
-    message = str(socketList[sockNumber].recv(1024))
+    newSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socketList.append(newSocket)
+    
+    message = str(socketList[socketNumber].recv(1024))
     answer += message[2]
 
     if len(message) > 6:
-        x1 = message[5:]
-        dump = socketList[sockNumber].recv(1024)
+        response = message[5:]
+        dump = socketList[socketNumber].recv(1024)
     else:
-        x1 = str(socketList[sockNumber].recv(1024))
+        response = str(socketList[socketNumber].recv(1024))
 
-    x1 = str(x1.replace("b'",'',1))
-    x1 = str(x1[:-3])
+    response = str(response.replace("b'",'',1))
+    response = str(response[:-3])
     
     try:
-        if 'and' in x1:
-            x1 = x1.replace(',','')
-            x1 = x1.replace('-',' ')
-            x1 = str(text2int(x1))
+        if 'and' in response:
+            response = response.replace(',','')
+            response = response.replace('-',' ')
+            response = str(text2int(response))
     except:
         pass
 
-    port2 = eval(str(i1))
+    newPort = eval(str(response))
     socketList[sockNumber].close()
     print(answer)
-    socketList[sockNumber+1].connect(('18.216.59.235', port2))
+    socketList[socketNumber+1].connect(('18.216.59.235', newPort))
