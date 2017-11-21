@@ -43,7 +43,7 @@ socketList.append(sock)
 for i in range(2):
     print(sock.recv(1024))
 
-sock1.send(b'\r')
+sock.send(b'\r')
 
 answer = ''
 
