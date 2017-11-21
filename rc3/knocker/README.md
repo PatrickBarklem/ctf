@@ -44,4 +44,4 @@ We used a lot of replace() functions to strip the server messages of certain cha
 
 For an unknown reason the flag returned didn't have '}' at the end and it would just refuse the last connection, luckily we managed to get the important part of it though!
 
-Flag was RC3-2017{i-am-the-0ne-wh0-knockz}
+Flag was RC3-2017{i-am-the-0ne-wh0-kn0ckz}
