@@ -28,7 +28,7 @@ This was where the first issue arose; the server was meant to return the flag ch
 We used a lot of replace() functions to strip the server messages of certain characters, whereas we should have used regex... but we were just aiming to get the flag, you can make it more efficient/prettier later! :)
 
 ```python
-response = str(response.replace("b'",'',1))
+    response = str(response.replace("b'",'',1))
     response = str(response[:-3])
     
     try:
