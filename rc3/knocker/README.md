@@ -17,7 +17,7 @@ Using socket.recv() returned the letter required for the flag as "b'<character>\
 This was where the first issue arose; the server was meant to return the flag character in one message and then send the next port number in the next message, however sometimes the server would send the flag character and the next port number in the same message and leave the next message blank. To overcome this I programmed in a check to see if the first message was more than 6 characters long, and then if it was, to use the second part of it as the str to evaluate.
 
 ```python
-if len(message) > 6:
+    if len(message) > 6:
         response = message[5:]
         dump = socketList[socketNumber].recv(1024)
     else:
